@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Java_pft.iml" filepath="$PROJECT_DIR$/Java_pft.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook-web-tests.main.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook-web-tests.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressbook-web-tests.test.iml" filepath="$PROJECT_DIR$/.idea/modules/addressbook-web-tests.test.iml" />
     </modules>
   </component>
 </project>
