@@ -2,7 +2,6 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -18,7 +17,6 @@ public class ApplicationManager {
   String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-
   public void init() {
     driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
@@ -29,9 +27,6 @@ public class ApplicationManager {
     sessionHelper = new SessionHelper(driver);
     sessionHelper.login("admin", "secret");
   }
-
-
-
   public void stop() {
     driver.quit();
     String verificationErrorString = verificationErrors.toString();
@@ -39,7 +34,6 @@ public class ApplicationManager {
       fail(verificationErrorString);
     }
   }
-
   private boolean isElementPresent(By by) {
     try {
       driver.findElement(by);
@@ -48,16 +42,6 @@ public class ApplicationManager {
       return false;
     }
   }
-
-  private boolean isAlertPresent() {
-    try {
-      driver.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
-    }
-  }
-
   private String closeAlertAndGetItsText() {
     try {
       Alert alert = driver.switchTo().alert();
