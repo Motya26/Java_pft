@@ -16,43 +16,60 @@ public class UserCreationTest {
     driver = new FirefoxDriver();
     //driver.manage().window().maximize();
     //driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    login("admin", "secret");
+
+  }
+
+  private void login(String username, String password) {
     driver.get("http://localhost/addressbook/");
     driver.findElement(By.id("LoginForm")).click();
     driver.findElement(By.name("user")).click();
-    driver.findElement(By.name("user")).sendKeys("admin");
+    driver.findElement(By.name("user")).sendKeys(username);
     driver.findElement(By.id("LoginForm")).click();
     driver.findElement(By.name("pass")).click();
-    driver.findElement(By.name("pass")).sendKeys("secret");
+    driver.findElement(By.name("pass")).sendKeys(password);
     driver.findElement(By.cssSelector("input:nth-child(7)")).click();
-
   }
 
   @Test
   public void testUserCreation() {
 
-    driver.findElement(By.linkText("add new")).click();
+    initUserCreation();
+    fillUserForm(new UserData("Lena", "Hidy", "High street 11", "090888888", "9987@qwe.com", "29", "December", "1989"));
+    submitUserCreation();
+  }
+
+  private void submitUserCreation() {
+    driver.findElement(By.cssSelector("input:nth-child(87)")).click();
+  }
+
+  private void fillUserForm(UserData userData) {
     driver.findElement(By.name("firstname")).click();
-    driver.findElement(By.name("firstname")).sendKeys("Lena");
-    driver.findElement(By.name("lastname")).sendKeys("Hidy");
-    driver.findElement(By.name("address")).sendKeys("High street 11");
-    driver.findElement(By.name("mobile")).sendKeys("090888888");
-    driver.findElement(By.name("email")).sendKeys("9987@qwe.com");
+    driver.findElement(By.name("firstname")).sendKeys(userData.firstname());
+    driver.findElement(By.name("lastname")).sendKeys(userData.lastname());
+    driver.findElement(By.name("address")).sendKeys(userData.address());
+    driver.findElement(By.name("mobile")).sendKeys(userData.mobile());
+    driver.findElement(By.name("email")).sendKeys(userData.email());
     driver.findElement(By.name("bday")).click();
     {
       WebElement dropdown = driver.findElement(By.name("bday"));
-      dropdown.findElement(By.xpath("//option[. = '29']")).click();
+      dropdown.findElement(By.xpath("//option[. = '" + userData.dayOfBirth() + "']")).click();
     }
     driver.findElement(By.cssSelector("select:nth-child(61) > option:nth-child(20)")).click();
     driver.findElement(By.name("bmonth")).click();
     {
       WebElement dropdown = driver.findElement(By.name("bmonth"));
-      dropdown.findElement(By.xpath("//option[. = 'December']")).click();
+      dropdown.findElement(By.xpath("//option[. = '" + userData.monthOfBirth() + "']")).click();
     }
     driver.findElement(By.cssSelector("select:nth-child(62) > option:nth-child(13)")).click();
     driver.findElement(By.name("byear")).click();
-    driver.findElement(By.name("byear")).sendKeys("1989");
-    driver.findElement(By.cssSelector("input:nth-child(87)")).click();
+    driver.findElement(By.name("byear")).sendKeys(userData.yearOfBirth());
   }
+
+  private void initUserCreation() {
+    driver.findElement(By.linkText("add new")).click();
+  }
+
   @After
   public void tearDown() {
     driver.quit();
